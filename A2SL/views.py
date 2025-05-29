@@ -136,13 +136,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 import traceback
 
-import os
-import traceback
-from django.conf import settings
-from django.http import FileResponse, Http404
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-
 @login_required(login_url="login")
 def animation_view(request):
     if request.method == 'POST':
@@ -167,20 +160,6 @@ def animation_view(request):
             })
 
     return render(request, 'animation.html')
-
-
-def case_insensitive_media_serve(request, requested_file):
-    media_root = settings.MEDIA_ROOT
-    requested_file_lower = requested_file.lower()
-
-    # Walk through media directory and try to find case-insensitive match
-    for root, dirs, files in os.walk(media_root):
-        for filename in files:
-            if filename.lower() == requested_file_lower:
-                file_path = os.path.join(root, filename)
-                return FileResponse(open(file_path, 'rb'))
-
-    raise Http404("File does not exist")
 
 
 def signup_view(request):
