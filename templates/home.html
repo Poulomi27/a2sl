@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<img src="{% static 'homepage.jpg' %}" width="500" height="380" class="center" alt="Hello Image">
+
+
+<div class="form-style" align="middle">
+	<a href="{% url 'animation' %}">
+  <button class="button">Start Now!</button>
+</a>
+
+<!-- <a href="{% url 'animation' %}">
+  <button class="button" 
+    style="padding: 12px 24px; font-size: 16px;">
+    Start Now!
+  </button>
+</a> -->
+
+<a href="{% url 'about' %}" 
+   class="know-btn"
+   style="
+     position: fixed; 
+     bottom: 10px; 
+     right: 20px; 
+     text-decoration: none; 
+     z-index: 1000;
+     display: inline-block;
+   ">
+  <button class="button small-btn" 
+    style="
+      padding: 6px 12px; 
+      font-size: 14px;
+      ">
+    Know Our Team
+  </button>
+</a>
+
+<script>
+  function applyResponsiveStyles() {
+    var knowBtn = document.querySelector('.know-btn');
+    var smallBtn = document.querySelector('.small-btn');
+
+    if(window.innerWidth <= 600){
+      knowBtn.style.position = 'static';
+      knowBtn.style.display = 'block';
+      knowBtn.style.marginTop = '12px';
+      knowBtn.style.textAlign = 'center';
+
+      // Increase font size by 2px from 14 to 16px
+      smallBtn.style.fontSize = '16px';
+
+      // Increase vertical padding by 5px total
+      // Original padding-top + bottom = 6px each = 12px total
+      // Add 5px split evenly (e.g. +2.5px top and bottom)
+      // But fractional px padding is OK in CSS.
+      smallBtn.style.paddingTop = '8.5px';
+      smallBtn.style.paddingBottom = '8.5px';
+	  smallBtn.style.width = '150px';
+
+    } else {
+      knowBtn.style.position = 'fixed';
+      knowBtn.style.bottom = '10px';
+      knowBtn.style.right = '20px';
+      knowBtn.style.display = 'inline-block';
+      knowBtn.style.marginTop = '0';
+      knowBtn.style.textAlign = 'left';
+
+      smallBtn.style.fontSize = '14px';
+      smallBtn.style.paddingTop = '6px';
+      smallBtn.style.paddingBottom = '6px';
+      smallBtn.style.paddingLeft = '12px';
+      smallBtn.style.paddingRight = '12px';
+    }
+  }
+
+  window.addEventListener('resize', applyResponsiveStyles);
+  window.addEventListener('load', applyResponsiveStyles);
+</script>
+
+</div>
+{% endblock %}
