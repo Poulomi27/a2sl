@@ -1,9 +1,23 @@
+# services:
+#   - type: web
+#     name: a2sl-django
+#     runtime: python
+#     buildCommand: pip install -r requirements.txt
+#     startCommand: gunicorn A2SL.wsgi:application
+#     envVars:
+#       - key: PYTHON_VERSION
+#         value: 3.8
+
 services:
   - type: web
-    name: a2sl-django
-    runtime: python
+    name: a2sl-app
+    env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn A2SL.wsgi:application
+    startCommand: gunicorn A2SL.wsgi
     envVars:
-      - key: PYTHON_VERSION
-        value: 3.8
+      - key: DJANGO_SETTINGS_MODULE
+        value: A2SL.settings
+      - key: SECRET_KEY
+        value: your-secret-key
+      - key: DEBUG
+        value: False

@@ -1,1 +1,1 @@
-web: gunicorn A2SL.wsgi:application --log-file -
+web: gunicorn A2SL.wsgi
