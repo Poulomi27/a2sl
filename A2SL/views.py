@@ -109,6 +109,31 @@ def contact_view(request):
 # 	else:
 # 		return render(request,'animation.html')
 
+# import traceback
+
+# @login_required(login_url="login")
+# def animation_view(request):
+#     if request.method == 'POST':
+#         try:
+#             text = request.POST.get('sen')
+#             if not text:
+#                 return render(request, 'animation.html', {'error': 'No sentence provided.'})
+
+#             text = text.lower()
+
+#             # rest of your processing here...
+
+#             return render(request, 'animation.html', {'words': words, 'text': text})
+
+#         except Exception as e:
+#             error_message = traceback.format_exc()
+#             print(error_message)  # Check console/server logs for full error
+#             return render(request, 'animation.html', {'error': str(e), 'traceback': error_message})
+#     else:
+#         return render(request, 'animation.html')
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 import traceback
 
 @login_required(login_url="login")
@@ -121,17 +146,20 @@ def animation_view(request):
 
             text = text.lower()
 
-            # rest of your processing here...
+            # Example keyword extraction logic
+            words = text.split()  # Simple split for testing
 
             return render(request, 'animation.html', {'words': words, 'text': text})
 
         except Exception as e:
             error_message = traceback.format_exc()
-            print(error_message)  # Check console/server logs for full error
-            return render(request, 'animation.html', {'error': str(e), 'traceback': error_message})
-    else:
-        return render(request, 'animation.html')
+            print(error_message)
+            return render(request, 'animation.html', {
+                'error': str(e),
+                'traceback': error_message
+            })
 
+    return render(request, 'animation.html')
 
 
 def signup_view(request):
