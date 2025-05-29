@@ -121,75 +121,14 @@ def animation_view(request):
 
             text = text.lower()
 
-            # Tokenizing the sentence
-            words = word_tokenize(text)
-
-            tagged = nltk.pos_tag(words)
-            tense = {}
-            tense["future"] = len([word for word in tagged if word[1] == "MD"])
-            tense["present"] = len([word for word in tagged if word[1] in ["VBP", "VBZ","VBG"]])
-            tense["past"] = len([word for word in tagged if word[1] in ["VBD", "VBN"]])
-            tense["present_continuous"] = len([word for word in tagged if word[1] in ["VBG"]])
-
-            stop_words = set([
-                "mightn't", 're', 'wasn', 'wouldn', 'be', 'has', 'that', 'does', 'shouldn', 'do',
-                "you've", 'off', 'for', "didn't", 'm', 'ain', 'haven', "weren't", 'are', "she's",
-                "wasn't", 'its', "haven't", "wouldn't", 'don', 'weren', 's', "you'd", "don't",
-                'doesn', "hadn't", 'is', 'was', "that'll", "should've", 'a', 'then', 'the', 'mustn',
-                'i', 'nor', 'as', "it's", "needn't", 'd', 'am', 'have',  'hasn', 'o', "aren't",
-                "you'll", "couldn't", "you're", "mustn't", 'didn', "doesn't", 'll', 'an', 'hadn',
-                'whom', 'y', "hasn't", 'itself', 'couldn', 'needn', "shan't", 'isn', 'been',
-                'such', 'shan', "shouldn't", 'aren', 'being', 'were', 'did', 'ma', 't', 'having',
-                'mightn', 've', "isn't", "won't"
-            ])
-
-            lr = WordNetLemmatizer()
-            filtered_text = []
-            for w, p in zip(words, tagged):
-                if w not in stop_words:
-                    if p[1] in ['VBG', 'VBD', 'VBZ', 'VBN', 'NN']:
-                        filtered_text.append(lr.lemmatize(w, pos='v'))
-                    elif p[1] in ['JJ', 'JJR', 'JJS', 'RBR', 'RBS']:
-                        filtered_text.append(lr.lemmatize(w, pos='a'))
-                    else:
-                        filtered_text.append(lr.lemmatize(w))
-
-            words = filtered_text
-            temp = []
-            for w in words:
-                if w == 'I':
-                    temp.append('Me')
-                else:
-                    temp.append(w)
-            words = temp
-
-            probable_tense = max(tense, key=tense.get)
-
-            if probable_tense == "past" and tense["past"] >= 1:
-                words = ["Before"] + words
-            elif probable_tense == "future" and tense["future"] >= 1:
-                if "Will" not in words:
-                    words = ["Will"] + words
-            elif probable_tense == "present" and tense["present_continuous"] >= 1:
-                words = ["Now"] + words
-
-            filtered_text = []
-            for w in words:
-                path = w + ".mp4"
-                f = finders.find(path)
-                if not f:
-                    for c in w:
-                        filtered_text.append(c)
-                else:
-                    filtered_text.append(w)
-            words = filtered_text
+            # rest of your processing here...
 
             return render(request, 'animation.html', {'words': words, 'text': text})
 
         except Exception as e:
-            print("Error in animation_view POST:", traceback.format_exc())
-            return render(request, 'animation.html', {'error': str(e)})
-
+            error_message = traceback.format_exc()
+            print(error_message)  # Check console/server logs for full error
+            return render(request, 'animation.html', {'error': str(e), 'traceback': error_message})
     else:
         return render(request, 'animation.html')
 

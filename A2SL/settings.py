@@ -159,8 +159,7 @@ nltk.data.path.append('/tmp')
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = '3k7=!d39#4@_&5a6to&4=_=j(c^v0(vv91cj5+9e8+d4&+01jb'
 
-DEBUG = False
-
+DEBUG = True
 ALLOWED_HOSTS = ['*']  # Use your actual domain or Render address in production
 
 # Application definition
