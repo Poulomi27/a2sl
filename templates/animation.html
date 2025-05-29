@@ -107,6 +107,106 @@
 			}
 		}
 	}
+	
+
+	function play() {
+  // DB video names exactly as in your list, no extension, case sensitive
+  const dbVideos = [
+    "0","1","2","3","4","5","6","7","8","9",
+    "At","B","Be","Beautiful","Before","Best","Better","Busy","But","Bye",
+    "C","Can","Cannot","Change","College","Come","Computer",
+    "D","Day","Distance","Do Not","Do","Does Not",
+    "E","Eat","Engineer",
+    "F","Fight","Finish","From",
+    "G","Glitter","Go","God","Gold","Good","Great",
+    "H","Hand","Hands","Happy","Hello","Help","Her","Here","His","Home","Homepage","How",
+    "I","Invent","It",
+    "J",
+    "K","Keep",
+    "L","Language","Laugh","Learn",
+    "M","ME","More","My",
+    "N","Name","Next","Not","Now",
+    "O","Of","On","Our","Out",
+    "P","Pretty",
+    "Q",
+    "R","Right",
+    "S","Sad","Safe","See","Self","Sign","Sing","So","Sound","Stay","Study",
+    "T","Talk","Television","Thank You","Thank","That","They","This","Those","Time","To","Type",
+    "U","Us",
+    "V",
+    "W","Walk","Wash","Way","We","Welcome","What","When","Where","Which","Who","Whole","Whose","Why","Will","With","Without","Words","Work","World","Wrong",
+    "X",
+    "Y","You","Your","Yourself",
+    "Z",
+    "a","after","again","against","age","all","alone","also","and","ask"
+  ];
+
+  // Function to check if video exists in DB (case-sensitive)
+  function existsInDB(videoName) {
+    return dbVideos.includes(videoName);
+  }
+
+  var videoSource = [];
+  var videos = document.getElementById("list").getElementsByTagName("li");
+
+  for (let j = 0; j < videos.length; j++) {
+    let original = videos[j].innerHTML.trim();
+
+    // Remove file extension if accidentally present
+    let name = original.replace(/\.mp4$/i, "");
+
+    if (existsInDB(name)) {
+      // Capitalize first char + rest as is for DB matches
+      let modified = name.charAt(0).toUpperCase() + name.slice(1);
+      videoSource[j] = "/static/" + modified + ".mp4";
+    } else {
+      // Use original as is (may be lowercase or no capital)
+      videoSource[j] = "/static/" + name + ".mp4";
+    }
+  }
+
+  var i = 0;
+  var videoCount = videoSource.length;
+
+  function videoPlay(videoNum) {
+    // Reset styles for all li
+    for (let k = 0; k < videos.length; k++) {
+      videos[k].style.color = "#feda6a";
+      videos[k].style.fontSize = "20px";
+    }
+    // Highlight current
+    videos[videoNum].style.color = "#09edc7";
+    videos[videoNum].style.fontSize = "xx-large";
+
+    let videoPlayer = document.getElementById("videoPlayer");
+    videoPlayer.setAttribute("src", videoSource[videoNum]);
+    videoPlayer.load();
+    videoPlayer.play();
+  }
+
+  function myHandler() {
+    i++;
+    if (i == videoCount) {
+      document.getElementById("videoPlayer").pause();
+      // Optionally reset styling of last item
+      for (let k = 0; k < videos.length; k++) {
+        videos[k].style.color = "#feda6a";
+        videos[k].style.fontSize = "20px";
+      }
+      i = 0; // reset if you want to loop or just stop here
+    } else {
+      videoPlay(i);
+    }
+  }
+
+  // Initial highlight and play
+  videoPlay(0);
+
+  // Listen to video ended event to move to next
+  document.getElementById('videoPlayer').addEventListener('ended', myHandler, false);
+}
+
+
 	/* LETS USE ONLY PLAY PAUSE BUTTON WITH 720 *420 ,IT FITS THE SCREEN
 	function makeBig() {
 		document.getElementById("videoPlayer").width = 560;
