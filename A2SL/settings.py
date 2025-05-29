@@ -133,15 +133,28 @@
 # DEBUG = False
 # ALLOWED_HOSTS = ['*'] 
 
+# import os
+# import nltk
+
+# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# # NLTK Setup
+# NLTK_DATA_DIR = os.path.join(BASE_DIR, 'nltk_data')
+# nltk.data.path.append(NLTK_DATA_DIR)
+
 import os
 import nltk
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Base directory of the Django project
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# NLTK Setup
-NLTK_DATA_DIR = os.path.join(BASE_DIR, 'nltk_data')
-nltk.data.path.append(NLTK_DATA_DIR)
+# For Render: download NLTK data to /tmp (the only writable directory in Render)
+nltk.download('averaged_perceptron_tagger', download_dir='/tmp')
+nltk.download('wordnet', download_dir='/tmp')
+nltk.download('omw-1.4', download_dir='/tmp')
+nltk.data.path.append('/tmp')
+
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = '3k7=!d39#4@_&5a6to&4=_=j(c^v0(vv91cj5+9e8+d4&+01jb'
