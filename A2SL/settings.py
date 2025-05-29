@@ -133,33 +133,21 @@
 # DEBUG = False
 # ALLOWED_HOSTS = ['*'] 
 
-# import os
-# import nltk
-
-# # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# # NLTK Setup
-# NLTK_DATA_DIR = os.path.join(BASE_DIR, 'nltk_data')
-# nltk.data.path.append(NLTK_DATA_DIR)
-
 import os
 import nltk
 
-# Base directory of the Django project
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# For Render: download NLTK data to /tmp (the only writable directory in Render)
-nltk.download('averaged_perceptron_tagger', download_dir='/tmp')
-nltk.download('wordnet', download_dir='/tmp')
-nltk.download('omw-1.4', download_dir='/tmp')
-nltk.data.path.append('/tmp')
-
+# NLTK Setup
+NLTK_DATA_DIR = os.path.join(BASE_DIR, 'nltk_data')
+nltk.data.path.append(NLTK_DATA_DIR)
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = '3k7=!d39#4@_&5a6to&4=_=j(c^v0(vv91cj5+9e8+d4&+01jb'
 
-DEBUG = True
+DEBUG = False
+
 ALLOWED_HOSTS = ['*']  # Use your actual domain or Render address in production
 
 # Application definition
@@ -249,24 +237,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Use Whitenoise for static file serving
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-import os
-import dj_database_url
-
-DEBUG = os.getenv("DEBUG", "False") == "True"
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
-
-ALLOWED_HOSTS = [ALLOWED_HOSTS = ['a2sl-production.up.railway.app', 'localhost', '127.0.0.1']
-
-CSRF_TRUSTED_ORIGINS = [
-    'https://a2sl-production.up.railway.app',
-]
-]
-
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# Optional (if using database)
-DATABASES = {
-    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
-}
