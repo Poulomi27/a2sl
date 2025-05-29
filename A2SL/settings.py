@@ -249,3 +249,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Use Whitenoise for static file serving
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+import os
+import dj_database_url
+
+DEBUG = os.getenv("DEBUG", "False") == "True"
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+
+ALLOWED_HOSTS = ["*", ".railway.app"]
+
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# Optional (if using database)
+DATABASES = {
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+}
