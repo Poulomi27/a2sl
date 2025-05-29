@@ -256,7 +256,12 @@ import dj_database_url
 DEBUG = os.getenv("DEBUG", "False") == "True"
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
-ALLOWED_HOSTS = ["*", ".railway.app"]
+ALLOWED_HOSTS = [ALLOWED_HOSTS = ['a2sl-production.up.railway.app', 'localhost', '127.0.0.1']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://a2sl-production.up.railway.app',
+]
+]
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -265,7 +270,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 DATABASES = {
     'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 }
-CSRF_TRUSTED_ORIGINS = [
-    'https://a2sl-production.up.railway.app',  # Your Railway domain
-    # add other domains if needed
-]
